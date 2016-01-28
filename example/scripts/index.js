@@ -13,10 +13,6 @@ if ('serviceWorker' in navigator) {
 
     setTimeout(function() {
       loadImages();
-
-      sendMessage('hello').then(function(message) {
-        console.log(message);
-      });
     }, 1000);
   }).catch(function(error) {
     console.log(`Service worker registration: error ${error}`);

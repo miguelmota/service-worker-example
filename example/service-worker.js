@@ -1,15 +1,15 @@
 'use strict';
 
-const VERSION = 'v2';
+const VERSION = 'v1';
 
-this.addEventListener('install', function(event) {
+self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(VERSION).then(function(cache) {
       return cache.addAll([
         '/',
         '/index.html',
-        '/index.css',
-        '/index.js',
+        '/styles/index.css',
+        '/scripts/index.js',
         '/images/js.png',
         '/images/not-found.png'
       ]);
@@ -17,31 +17,34 @@ this.addEventListener('install', function(event) {
   );
 });
 
-this.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).catch(function() {
       return fetch(event.request);
     }).then(function(response) {
-      if (response.ok) {
+      if (response && response.ok) {
         caches.open(VERSION).then(function(cache) {
           cache.put(event.request, response);
         });
         return response.clone();
       }
-      return Promise.reject();
-    }).catch(function(response) {
-    console.log(response);
-      return caches.match('/images/not-found.png');
+      return Promise.reject(response);
+    }).catch(function() {
+      if (/(\.png|\.jpg)$/.test(event.request.url)) {
+        return caches.match('/images/not-found.png');
+      }
+
+      return fetch(event.request);
     })
   );
 });
 
-this.addEventListener('activate', function(event) {
+self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
         if (key !== VERSION) {
-          return caches.delete(keyList[i]);
+          return caches.delete(key);
         }
       }));
     }).then(function() {
