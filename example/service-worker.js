@@ -12,7 +12,9 @@ self.addEventListener('install', function(event) {
         '/scripts/index.js',
         '/images/js.png',
         '/images/not-found.png'
-      ]);
+      ])
+    }).then(function(){
+        self.skipWaiting();
     })
   );
 });
