@@ -6,6 +6,14 @@
 
 [http://lab.moogs.io/service-worker-example](http://lab.moogs.io/service-worker-example)
 
+# Running
+
+```bash
+$ cd example/
+$ python -m SimpleHTTPServer 8080
+$ open http://localhost:8080
+```
+
 # License
 
 MIT
