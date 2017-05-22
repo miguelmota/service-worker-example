@@ -4,7 +4,7 @@
 
 # Demo
 
-[http://lab.moogs.io/service-worker-example](http://lab.moogs.io/service-worker-example)
+[https://lab.miguelmota.com/service-worker-example](https://lab.miguelmota.com/service-worker-example)
 
 # Running
 
